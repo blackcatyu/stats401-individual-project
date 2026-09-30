@@ -11,7 +11,7 @@ The visualization selected for this project is Figure 2.1, "Country rankings by 
   <img src="ZkXLXsV9ZJ-1350.webp" alt="Figure 2.1 of the World Happiness Report 2026: 147 countries ranked by life evaluation, each drawn as a horizontal stacked bar with seven coloured segments and a confidence-interval whisker." width="420">
 </p>
 
-**Figure 1.** The original visualization: Figure 2.1, "Country rankings by life evaluations," World Happiness Report 2026.
+**Figure 1.** The original visualization: Figure 2.1, "Country rankings by life evaluations." Source: Helliwell et al. (2026).
 
 The figure carries two messages: which countries are happiest and least happy, with Finland ranked first and Afghanistan last, more than six points apart, and which social and economic factors are associated with these differences. Its audience is mixed. Journalists and the general public tend to read it as a "happiest countries" league table, while policymakers and researchers use it to reason about the drivers of well-being. Following the distinction between elementary and synoptic tasks adopted by Duncan et al. (2021), viewers should be able to perform elementary tasks, such as locating a country and comparing two countries while accounting for uncertainty, as well as synoptic tasks, such as comparing regions and understanding how the explanatory factors vary across all countries.
 
@@ -33,11 +33,11 @@ First, every score is drawn as a dot with a prominent 95% interval instead of a 
 
 Second, the explanatory factors are taken out of the bar. A scatter plot places one selected factor on a shared horizontal axis against life evaluation, and a profile panel draws the selected country's six factors as bars from a common baseline. The Dystopia constant is removed, so the residual is shown alone and can be negative. This addresses the first two weaknesses: factors are read as aligned positions, and they appear as correlates of the score rather than parts of it.
 
-Third, countries can be grouped by World Bank region with a median line, filtered to one region, or found by search, and a single hue replaces the seven colors. Regions are therefore compared by position, which supports the synoptic task the original leaves to memory.
+Third, countries can be grouped by World Bank region (World Bank, n.d.) with a median line, filtered to one region, or found by search, and a single hue replaces the seven colors. Regions are therefore compared by position, which supports the synoptic task the original leaves to memory.
 
 ![The redesign: a dot plot of life evaluation with confidence intervals on the left, and on the right a scatter plot of life evaluation against GDP per capita above a factor profile for Belize.](redesign_screenshot.png)
 
-**Figure 2.** The redesign with Belize selected. Countries whose intervals overlap Belize's stay in full color.
+**Figure 2.** The redesign with Belize selected. Countries whose intervals overlap Belize's stay in full color. Data: Wellbeing Research Centre (2026); regions: World Bank (n.d.).
 
 ## Original vs. Redesign
 
@@ -51,8 +51,12 @@ Cleveland, W. S., & McGill, R. (1984). Graphical perception: Theory, experimenta
 
 Duncan, I. K., Tingsheng, S., Perrault, S. T., & Gastner, M. T. (2021). Task-based effectiveness of interactive contiguous area cartograms. *IEEE Transactions on Visualization and Computer Graphics, 27*(3), 2136–2152.
 
-Helliwell, J. F., Layard, R., Sachs, J. D., De Neve, J.-E., Aknin, L. B., & Wang, S. (Eds.). (2026). *World Happiness Report 2026*. University of Oxford: Wellbeing Research Centre. https://www.worldhappiness.report/ed/2026/
+Helliwell, J. F., Aknin, L. B., Huang, H., Rojas, M., Wang, S., Guerra, V., & Danyluk, A. (2026). International evidence on happiness and social media. In J. F. Helliwell, R. Layard, J. D. Sachs, J.-E. De Neve, L. B. Aknin, & S. Wang (Eds.), *World Happiness Report 2026*. University of Oxford: Wellbeing Research Centre. https://worldhappiness.report/ed/2026/international-evidence-on-happiness-and-social-media/
 
 Okoe, M., Jianu, R., & Kobourov, S. (2019). Node-link or adjacency matrices: Old question, new insights. *IEEE Transactions on Visualization and Computer Graphics, 25*(10), 2940–2952.
 
 Szafir, D. A. (2018). Modeling color difference for visualization design. *IEEE Transactions on Visualization and Computer Graphics, 24*(1), 392–401.
+
+Wellbeing Research Centre. (2026). *World Happiness Report 2026: Data for Figure 2.1* [Data set]. University of Oxford. https://worldhappiness.report/data-sharing/
+
+World Bank. (n.d.). *World Bank country and lending groups*. Retrieved September 30, 2026, from https://datahelpdesk.worldbank.org/knowledgebase/articles/906519-world-bank-country-and-lending-groups
