@@ -35,9 +35,9 @@ Second, the explanatory factors are taken out of the bar. A scatter plot places 
 
 Third, countries can be grouped by World Bank region (World Bank, n.d.) with a median line, filtered to one region, or found by search, and a single hue replaces the seven colors. Regions are therefore compared by position, which supports the synoptic task the original leaves to memory.
 
-![The redesign: a dot plot of life evaluation with confidence intervals on the left, and on the right a scatter plot of life evaluation against GDP per capita above a factor profile for Belize.](redesign_screenshot.png)
+![The redesign: a dot plot of life evaluation with confidence intervals on the left, and on the right a scatter plot of life evaluation against GDP per capita above a factor profile for Armenia.](redesign_screenshot.png)
 
-**Figure 2.** The redesign with Belize selected. Countries whose intervals overlap Belize's stay in full color. Data: Wellbeing Research Centre (2026); regions: World Bank (n.d.).
+**Figure 2.** The redesign, grouped by region, with Armenia selected. Countries whose intervals overlap Armenia's stay in full color. Data: Wellbeing Research Centre (2026); regions: World Bank (n.d.).
 
 ## Original vs. Redesign
 
