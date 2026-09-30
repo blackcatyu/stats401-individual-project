@@ -1,0 +1,451 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 1320px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+h1 {
+    font-size: 32px;
+}
+
+h2 {
+    margin-top: 30px;
+}
+
+p {
+    line-height: 1.6;
+}
+
+header {
+    padding-bottom: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+.hint {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.chart-title {
+    margin: 6px 0 8px;
+    font-size: 0.95rem;
+}
+
+.tooltip {
+    position: absolute;
+    z-index: 10;
+    max-width: 360px;
+    background: white;
+    border: 1px solid #aaa;
+    padding: 8px 10px;
+    border-radius: 4px;
+    pointer-events: none;
+    opacity: 0;
+    font-size: 14px;
+}
+
+.design-note {
+    background: #f9f9f7;
+    border-left: 3px solid #b7b2a7;
+    padding: 4px 18px;
+    margin: 24px 0;
+}
+
+.design-note h4 {
+    margin-bottom: 6px;
+}
+
+.whr-original {
+    display: grid;
+    grid-template-columns: 380px minmax(0, 1fr);
+    gap: 10px 32px;
+    align-items: start;
+}
+
+.whr-original figure {
+    margin: 0;
+}
+
+.whr-original-scroll {
+    max-height: 520px;
+    overflow-y: auto;
+    border: 1px solid #e6e6e6;
+    border-radius: 6px;
+}
+
+.whr-original-scroll img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.whr-original figcaption {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #52514e;
+}
+
+.whr-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 20px;
+    margin: 18px 0 6px;
+    font-size: 0.9rem;
+}
+
+.whr-controls input[type=text],
+.whr-controls select,
+#measure-select {
+    padding: 5px 8px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    border: 1px solid #b7b2a7;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.whr-controls input[type=text] {
+    width: 190px;
+}
+
+.whr-arrange {
+    display: flex;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.whr-arrange legend {
+    float: left;
+    padding: 0;
+    margin-right: 10px;
+}
+
+.whr-arrange label {
+    cursor: pointer;
+}
+
+.whr-controls button {
+    padding: 6px 14px;
+    font-size: 0.9rem;
+    border: 1px solid #b7b2a7;
+    border-radius: 4px;
+    background: #f9f9f7;
+    cursor: pointer;
+}
+
+.whr-controls button:hover:not(:disabled) {
+    background: #eeece6;
+}
+
+.whr-controls button:disabled {
+    opacity: 0.45;
+    cursor: default;
+}
+
+.whr-status {
+    min-height: 22px;
+    font-size: 0.85rem;
+    color: #52514e;
+}
+
+.whr-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: 18px 28px;
+    align-items: start;
+}
+
+.whr-side {
+    position: sticky;
+    top: 10px;
+    display: grid;
+    gap: 14px;
+}
+
+@media (max-width: 1000px) {
+    .whr-original,
+    .whr-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .whr-side {
+        position: static;
+    }
+
+    /* Keep the list legible on a phone: scroll sideways rather than shrink. */
+    .whr-panel {
+        overflow-x: auto;
+    }
+
+    #dot-axis,
+#dot-plot {
+        min-width: 560px;
+    }
+}
+
+.whr-panel {
+    padding: 10px 14px 12px;
+    border: 1px solid #e6e6e6;
+    border-radius: 6px;
+    background: #fcfcfb;
+}
+
+.whr-panel .chart-title {
+    margin: 2px 0 6px;
+}
+
+.whr-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* Column headings and the score axis stay in view while the list scrolls. */
+#dot-axis {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: #fcfcfb;
+    border-bottom: 1px solid #c3c2b7;
+}
+
+.whr-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 18px;
+    margin-bottom: 6px;
+    font-size: 12px;
+    color: #52514e;
+}
+
+.whr-key {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.whr-note {
+    margin: 6px 0 0;
+    font-size: 0.8rem;
+    line-height: 1.45;
+    color: #52514e;
+}
+
+.whr-grid {
+    stroke: #e1e0d9;
+    stroke-width: 1px;
+}
+
+.whr-zero {
+    stroke: #e1e0d9;
+    stroke-width: 1px;
+}
+
+.whr-zero.is-strong {
+    stroke: #898781;
+}
+
+.whr-axis text {
+    font-size: 10px;
+    fill: #52514e;
+    font-variant-numeric: tabular-nums;
+}
+
+.whr-axis line {
+    stroke: #c3c2b7;
+}
+
+.whr-axis-title,
+.whr-col-head {
+    font-size: 10.5px;
+    fill: #52514e;
+}
+
+.whr-col-head {
+    font-weight: bold;
+}
+
+.whr-row {
+    cursor: pointer;
+    transition: opacity 0.25s;
+}
+
+.whr-row-hit {
+    fill: transparent;
+}
+
+.whr-row.is-hover .whr-row-hit {
+    fill: #f0efec;
+}
+
+.whr-rank,
+.whr-score {
+    font-size: 10.5px;
+    fill: #898781;
+    font-variant-numeric: tabular-nums;
+    pointer-events: none;
+}
+
+.whr-name {
+    font-size: 11px;
+    fill: #0b0b0b;
+    pointer-events: none;
+}
+
+/* The interval is a light bar wider than the dot, so the dot never hides it. */
+.whr-ci {
+    stroke: #86b6ef;
+    stroke-width: 5px;
+    stroke-linecap: round;
+    pointer-events: none;
+}
+
+.whr-dot {
+    fill: #184f95;
+    pointer-events: none;
+}
+
+.whr-row.is-dim {
+    opacity: 0.4;
+}
+
+.whr-row.is-selected .whr-name {
+    font-weight: bold;
+}
+
+.whr-row.is-selected .whr-rank,
+.whr-row.is-selected .whr-score {
+    fill: #0b0b0b;
+    font-weight: bold;
+}
+
+.whr-row.is-selected .whr-dot {
+    fill: #0b0b0b;
+}
+
+.whr-row.is-selected .whr-ci {
+    stroke: #898781;
+}
+
+.whr-band {
+    fill: #2a78d6;
+    opacity: 0.12;
+    pointer-events: none;
+}
+
+.whr-header-bg {
+    fill: #f0efec;
+}
+
+.whr-region-name {
+    font-size: 11px;
+    font-weight: bold;
+    fill: #0b0b0b;
+}
+
+.whr-median-line {
+    stroke: #52514e;
+    stroke-width: 1px;
+}
+
+.whr-median-label {
+    font-size: 10px;
+    fill: #52514e;
+}
+
+.whr-point {
+    fill: #2a78d6;
+    stroke: #fcfcfb;
+    stroke-width: 1px;
+    opacity: 0.8;
+}
+
+.whr-point.is-out {
+    fill: #c3c2b7;
+    opacity: 0.55;
+}
+
+.whr-hit {
+    fill: transparent;
+    cursor: pointer;
+}
+
+.whr-marks {
+    pointer-events: none;
+}
+
+.whr-mark circle {
+    fill: none;
+    stroke: #0b0b0b;
+    stroke-width: 1.5px;
+}
+
+.whr-mark.is-selected circle {
+    fill: #0b0b0b;
+    stroke: #fcfcfb;
+}
+
+.whr-mark text {
+    font-size: 11px;
+    fill: #0b0b0b;
+    paint-order: stroke;
+    stroke: #fcfcfb;
+    stroke-width: 3px;
+    stroke-linejoin: round;
+}
+
+.whr-mark.is-selected text {
+    font-weight: bold;
+}
+
+.whr-profile-label {
+    font-size: 11px;
+    fill: #0b0b0b;
+}
+
+.whr-profile-bar {
+    fill: #2a78d6;
+    pointer-events: none;
+}
+
+.whr-profile-row.is-residual .whr-profile-bar {
+    fill: #898781;
+}
+
+.whr-profile-median {
+    stroke: #0b0b0b;
+    stroke-width: 2px;
+}
+
+.whr-profile-value {
+    font-size: 10.5px;
+    fill: #52514e;
+    font-variant-numeric: tabular-nums;
+}
+
+.whr-check {
+    margin-left: 10px;
+    font-size: 0.8rem;
+    font-weight: normal;
+    color: #52514e;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.whr-tip-muted {
+    color: #52514e;
+    font-size: 12px;
+}
+
+.design-note ul {
+    line-height: 1.6;
+}
+
+.design-note li {
+    margin-bottom: 8px;
+}

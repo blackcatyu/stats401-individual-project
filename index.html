@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>STATS 401 - Individual Project</title>
+
+    <link rel="stylesheet"
+          href="css/style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>STATS 401 - Individual Project</h1>
+    <p>Data Acquisition and Visualization</p>
+</header>
+
+<main>
+    <h2>Visualization Critique and Redesign: Country Rankings by Life Evaluations</h2>
+
+    <!-- 1. Original visualization ---------------------------------------->
+    <h3>1. Original visualization and source</h3>
+
+    <div class="whr-original">
+        <figure>
+            <div class="whr-original-scroll" tabindex="0"
+                 aria-label="Original figure, scrollable">
+                <img src="ZkXLXsV9ZJ-1350.webp"
+                     alt="Figure 2.1 of the World Happiness Report 2026: a ranked list of 147 countries, each drawn as a horizontal stacked bar with seven coloured segments and a confidence-interval whisker.">
+            </div>
+            <figcaption>
+                <strong>Figure 2.1: Country rankings by life evaluations</strong>,
+                Gallup World Poll (2023&ndash;2025). Source:
+                <a href="https://worldhappiness.report/ed/2026/international-evidence-on-happiness-and-social-media/">
+                    <em>World Happiness Report 2026</em>, Chapter 2</a>.
+                Scroll inside the frame to see all 147 rows.
+            </figcaption>
+        </figure>
+
+        <div>
+            <p>
+                The figure ranks 147 countries by their average answer to the
+                Cantril ladder question in the Gallup World Poll, averaged over
+                2023&ndash;2025: respondents rate their current life from 0
+                (worst possible) to 10 (best possible). The total length of each
+                bar is that average, the whisker at its end is the 95%
+                confidence interval of the mean, and the bracket next to each
+                rank is a confidence interval for the rank itself.
+            </p>
+            <p>
+                Each bar is also cut into seven coloured segments. Six show how
+                much of the country&rsquo;s score a regression model attributes to
+                GDP per capita, social support, healthy life expectancy,
+                freedom to make life choices, generosity and perceptions of
+                corruption. The seventh adds the score of an imaginary
+                benchmark country, &ldquo;Dystopia&rdquo; (1.16), to the
+                country&rsquo;s own residual: the part of its score that the
+                six factors do not explain.
+            </p>
+            <p>
+                The figure is meant to show who is happiest and least happy
+                (Nordic countries lead; Finland and Afghanistan are more than
+                six points apart) and to suggest what may lie behind the
+                differences. It is read by the general public and the media,
+                who reprint it every year as a league table, and also by
+                researchers and policy makers. Readers use it to look up a
+                country, to judge whether two countries really differ, to see
+                which factors go with high life evaluations, and to compare
+                regions.
+            </p>
+            <p class="hint">
+                The ranking comes from the survey answers alone. The six
+                factors are a later explanation of the scores and are not used
+                to compute them, which the stacked bars make easy to
+                misunderstand.
+            </p>
+        </div>
+    </div>
+
+    <!-- 2. Redesign ------------------------------------------------------->
+    <h3>2. Redesign</h3>
+
+    <p>
+        The redesign separates the two things the original stacks into one
+        bar. On the left, each country&rsquo;s score is a dot with its 95%
+        confidence interval. On the right, one explanatory factor at a time is
+        plotted against the score, and the selected country&rsquo;s factors
+        are drawn as separate bars from a common baseline.
+    </p>
+
+    <p class="hint">
+        Click a country (or search for it) to see which other countries it
+        cannot be told apart from: those whose intervals overlap the shaded
+        band stay in colour and the rest fade. Overlapping intervals are a
+        visual guide, not a formal significance test. The &ldquo;Rank
+        range&rdquo; column is computed the same way, from the published
+        intervals, and is close to but not identical to the rank intervals
+        printed in the original figure.
+    </p>
+
+    <div class="whr-controls">
+        <label>
+            Find a country
+            <input id="country-search" type="text" list="country-list"
+                   placeholder="e.g. Costa Rica" autocomplete="off">
+            <datalist id="country-list"></datalist>
+        </label>
+
+        <label>
+            Region
+            <select id="region-select"></select>
+        </label>
+
+        <fieldset class="whr-arrange">
+            <legend>Arrange</legend>
+            <label><input type="radio" name="arrange" value="global" checked> One global list</label>
+            <label><input type="radio" name="arrange" value="region"> Grouped by region</label>
+        </fieldset>
+
+        <button id="clear-selection" type="button" disabled>Clear selection</button>
+    </div>
+
+    <div class="whr-status">
+        <span id="search-note"></span>
+        <span id="selection-note"></span>
+    </div>
+
+    <div class="whr-layout">
+        <section class="whr-panel">
+            <h4 class="chart-title">Life evaluation by country, with 95% confidence intervals</h4>
+            <div class="whr-legend">
+                <span class="whr-key">
+                    <svg width="34" height="12" aria-hidden="true">
+                        <line class="whr-ci" x1="4" x2="30" y1="6" y2="6"></line>
+                        <circle class="whr-dot" cx="17" cy="6" r="3"></circle>
+                    </svg>
+                    mean and 95% confidence interval
+                </span>
+                <span class="whr-key">
+                    <svg width="14" height="12" aria-hidden="true">
+                        <line class="whr-median-line" x1="7" x2="7" y1="0" y2="12"></line>
+                    </svg>
+                    regional median (grouped view)
+                </span>
+                <span class="whr-key">
+                    <svg width="18" height="12" aria-hidden="true">
+                        <rect class="whr-band" width="18" height="12"></rect>
+                    </svg>
+                    interval of the selected country
+                </span>
+            </div>
+            <div id="dot-axis"></div>
+            <div id="dot-plot"></div>
+        </section>
+
+        <aside class="whr-side">
+            <section class="whr-panel">
+                <h4 class="chart-title">
+                    <label for="measure-select">Life evaluation against</label>
+                    <select id="measure-select"></select>
+                    <label class="whr-check">
+                        <input id="shared-axis" type="checkbox" checked>
+                        same axis for all factors
+                    </label>
+                </h4>
+                <div id="scatter"></div>
+                <p id="scatter-note" class="whr-note"></p>
+            </section>
+
+            <section class="whr-panel">
+                <h4 class="chart-title" id="profile-title">Factor profile</h4>
+                <p id="profile-summary" class="whr-note"></p>
+                <div id="profile"></div>
+                <div id="profile-legend" class="whr-legend">
+                    <span class="whr-key">
+                        <svg width="10" height="14" aria-hidden="true">
+                            <line class="whr-profile-median" x1="5" x2="5" y1="0" y2="14"></line>
+                        </svg>
+                        median of all countries
+                    </span>
+                    <span class="whr-key">values are ladder points of life evaluation</span>
+                </div>
+            </section>
+        </aside>
+    </div>
+
+    <div id="tooltip" class="tooltip"></div>
+
+    <!-- 3. Redesign notes ------------------------------------------------->
+    <section class="design-note">
+        <h4>What changed and why</h4>
+        <ul>
+            <li>
+                <strong>Stacked bars became dots with intervals.</strong> A
+                score is one number from a survey, so it is drawn as one
+                position. The interval is as prominent as the dot, and the rank
+                is shown as a range: adjacent countries in the original
+                typically differ by about 0.02 points while the average
+                interval is about 0.22 points wide.
+            </li>
+            <li>
+                <strong>Factors moved to their own axis.</strong> In the
+                original only the first segment starts at a common baseline,
+                so the other factors cannot be compared across countries. Here
+                a factor is a position on the horizontal axis of the scatter
+                plot, which also shows how closely it goes with life
+                evaluation.
+            </li>
+            <li>
+                <strong>The residual is shown on its own.</strong> The Dystopia
+                constant is removed, leaving a value that can be positive or
+                negative. The original cannot draw the three countries with a
+                negative segment (Hong Kong SAR of China, Sri Lanka, Botswana)
+                without their bars overshooting their scores.
+            </li>
+            <li>
+                <strong>Regions are groups, not colours.</strong> Countries
+                can be grouped by World Bank region with a median line, or
+                filtered to one region, so regions are compared by position.
+                One colour is used for all countries; search and filtering
+                replace scanning 147 rows.
+            </li>
+        </ul>
+        <p>
+            Limitations: the full list is still long; Tajikistan and the State
+            of Palestine each lack one factor in the source data, so they have
+            no residual and are missing from the scatter plot for that factor;
+            and the six factors describe association, not causes.
+        </p>
+    </section>
+
+    <!-- 3. Report --------------------------------------------------------->
+    <h3>3. Report</h3>
+
+    <p>
+        The written critique and redesign report for this project is the
+        repository&rsquo;s README:
+        <a href="https://github.com/blackcatyu/stats401-individual-project#readme">
+            Report on GitHub</a>.
+    </p>
+
+    <!-- 4. Data and references -------------------------------------------->
+    <h3>4. Data source and references</h3>
+
+    <ul>
+        <li>
+            <strong>Original visualization:</strong> Helliwell, J. F., Aknin, L. B.,
+            Huang, H., Rojas, M., Wang, S., Guerra, V., &amp; Danyluk, A. (2026).
+            International evidence on happiness and social media. In
+            J. F. Helliwell, R. Layard, J. D. Sachs, J.-E. De Neve, L. B. Aknin,
+            &amp; S. Wang (Eds.), <em>World Happiness Report 2026</em>.
+            University of Oxford: Wellbeing Research Centre.
+            <a href="https://worldhappiness.report/ed/2026/international-evidence-on-happiness-and-social-media/">
+                worldhappiness.report/ed/2026/international-evidence-on-happiness-and-social-media</a>
+        </li>
+        <li>
+            <strong>Data:</strong> &ldquo;Data for Figure 2.1&rdquo;,
+            <em>World Happiness Report 2026</em>
+            (<a href="https://worldhappiness.report/data-sharing/">worldhappiness.report/data-sharing</a>).
+            The 2025 rows (the 2023&ndash;2025 average) were exported to
+            <code>data/whr26_2025.csv</code> by
+            <code>prepare_data.py</code>, which also subtracts the
+            Dystopia constant (1.16) from the last column to leave each
+            country&rsquo;s residual.
+        </li>
+        <li>
+            <strong>Regions:</strong> World Bank,
+            <a href="https://datahelpdesk.worldbank.org/knowledgebase/articles/906519-world-bank-country-and-lending-groups">
+                World Bank Country and Lending Groups</a>, seven-region grouping
+            with Afghanistan and Pakistan in South Asia. Taiwan Province of
+            China is not in the World Bank list and was placed in East Asia
+            &amp; Pacific by hand.
+        </li>
+        <li>
+            <strong>How the ranking is built:</strong> World Happiness Report,
+            <a href="https://worldhappiness.report/faq">Frequently asked questions</a>.
+        </li>
+    </ul>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script src="js/redesign.js"></script>
+
+</body>
+</html>
